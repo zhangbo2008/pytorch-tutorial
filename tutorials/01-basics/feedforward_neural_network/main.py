@@ -21,6 +21,17 @@ num_epochs = 5
 batch_size = 100
 learning_rate = 0.001
 
+a = torch.randn(4, 4)
+#用item来取出数组中的数据.
+print(a.sum().item())
+print(a)
+print(a[0])
+print(torch.max(a, 0))
+
+
+
+
+
 
 
 
@@ -52,12 +63,15 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           shuffle=False)
 
 
-
+'''
+全连接,一层hidden layer
+'''
 
 # Fully connected neural network with one hidden layer
 class NeuralNet(nn.Module):
     def __init__(self, input_size, hidden_size, num_classes):
-        super(NeuralNet, self).__init__()
+        super(self.__class__, self).__init__()#这个是python里面写法,首先找到NeuralNet的父类,然后做初始化.
+        #只要是python继承的类,都是这么写!固定写法.这里面写类名可以也可以写self.__class__
         self.fc1 = nn.Linear(input_size, hidden_size) 
         self.relu = nn.ReLU()
         self.fc2 = nn.Linear(hidden_size, num_classes)  
@@ -68,7 +82,7 @@ class NeuralNet(nn.Module):
         out = self.fc2(out)
         return out
 
-model = NeuralNet(input_size, hidden_size, num_classes).to(device)
+model = NeuralNet(input_size, hidden_size, num_classes).to(device)#to 设置运算硬件.
 
 # Loss and optimizer
 criterion = nn.CrossEntropyLoss()
@@ -84,9 +98,16 @@ for epoch in range(num_epochs):
         
         # Forward pass
         outputs = model(images)
+
+        '''
+        跟tf不同,pytorch里面的loss写在optimizer的外面.
+        '''
         loss = criterion(outputs, labels)
         
         # Backward and optimize
+        '''
+        下面这3行是经典pytorch废话,必须这么写.
+        '''
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -97,7 +118,7 @@ for epoch in range(num_epochs):
 
 # Test the model
 # In test phase, we don't need to compute gradients (for memory efficiency)
-with torch.no_grad():
+with torch.no_grad():#让torch不计算grad!!!!!!!
     correct = 0
     total = 0
     for images, labels in test_loader:
@@ -105,7 +126,7 @@ with torch.no_grad():
         labels = labels.to(device)
         outputs = model(images)
         _, predicted = torch.max(outputs.data, 1)
-        total += labels.size(0)
+        total += labels.size(0) #第0个分量.
         correct += (predicted == labels).sum().item()
 
     print('Accuracy of the network on the 10000 test images: {} %'.format(100 * correct / total))
