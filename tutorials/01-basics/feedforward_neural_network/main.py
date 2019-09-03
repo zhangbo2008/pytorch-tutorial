@@ -3,7 +3,13 @@ import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
 
+'''
+学习pytorch代码,和一般ai代码的书写规则
+'''
 
+'''
+上来写所有的超参数
+'''
 # Device configuration
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -15,6 +21,12 @@ num_epochs = 5
 batch_size = 100
 learning_rate = 0.001
 
+
+
+
+'''
+然后写数据集地址.这里面有torchvision内部带的数据.
+'''
 # MNIST dataset 
 train_dataset = torchvision.datasets.MNIST(root='../../data', 
                                            train=True, 
@@ -25,6 +37,11 @@ test_dataset = torchvision.datasets.MNIST(root='../../data',
                                           train=False, 
                                           transform=transforms.ToTensor())
 
+
+'''
+数据集batch读取.用torch.utils.dat.Dataloader
+'''
+
 # Data loader
 train_loader = torch.utils.data.DataLoader(dataset=train_dataset, 
                                            batch_size=batch_size, 
@@ -33,6 +50,9 @@ train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
 test_loader = torch.utils.data.DataLoader(dataset=test_dataset, 
                                           batch_size=batch_size, 
                                           shuffle=False)
+
+
+
 
 # Fully connected neural network with one hidden layer
 class NeuralNet(nn.Module):
