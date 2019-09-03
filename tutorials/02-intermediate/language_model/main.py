@@ -5,7 +5,9 @@ import torch.nn as nn
 import numpy as np
 from torch.nn.utils import clip_grad_norm_
 from data_utils import Dictionary, Corpus
-
+'''
+2里面的网络都是最重要的,需要多跑几次,多熟悉这些网络的写法!!!!!!!!!!!!
+'''
 
 # Device configuration
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

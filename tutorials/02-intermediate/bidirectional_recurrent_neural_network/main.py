@@ -36,6 +36,15 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=batch_size, 
                                           shuffle=False)
 
+
+
+'''
+跟以前一样
+'''
+
+
+
+
 # Bidirectional recurrent neural network (many-to-one)
 class BiRNN(nn.Module):
     def __init__(self, input_size, hidden_size, num_layers, num_classes):
@@ -46,7 +55,7 @@ class BiRNN(nn.Module):
         self.fc = nn.Linear(hidden_size*2, num_classes)  # 2 for bidirection
     
     def forward(self, x):
-        # Set initial states
+        # Set initial states  表示lstm计算的初始值.给定0或者很小的数即可.
         h0 = torch.zeros(self.num_layers*2, x.size(0), self.hidden_size).to(device) # 2 for bidirection 
         c0 = torch.zeros(self.num_layers*2, x.size(0), self.hidden_size).to(device)
         

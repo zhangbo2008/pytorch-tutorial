@@ -2,7 +2,7 @@ import torch
 import os
 
 
-class Dictionary(object):
+class Dictionary(object):#先编码
     def __init__(self):
         self.word2idx = {}
         self.idx2word = {}

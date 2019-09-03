@@ -2,7 +2,14 @@ import torch
 import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
+'''
+wget http://www.asty.org/cmatrix/dist/cmatrix-1.2a.tar.gz
+tar xvf cmatrix-1.2a.tar.gz
+cd cmatrix-1.2a
+yum install ncurses-devel
+./configure && make && make install
 
+'''
 
 # Hyper-parameters
 input_size = 1
