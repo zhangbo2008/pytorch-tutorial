@@ -6,7 +6,8 @@ import torchvision.transforms as transforms
 
 # Device configuration
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
+print(device,"这次可以开心跑代码了.直接调用服务器gpu,告别vim编程,并且点进去看源码看的都是服务器端安装的"
+             "源码")
 # Hyper-parameters
 sequence_length = 28
 input_size = 28
@@ -14,6 +15,7 @@ hidden_size = 128
 num_layers = 2
 num_classes = 10
 batch_size = 100
+
 num_epochs = 2
 learning_rate = 0.003
 
@@ -48,7 +50,7 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
 # Bidirectional recurrent neural network (many-to-one)
 class BiRNN(nn.Module):
     def __init__(self, input_size, hidden_size, num_layers, num_classes):
-        super(BiRNN, self).__init__()
+        super(BiRNN, self).__init__()#初始化函数的第一行还是一样
         self.hidden_size = hidden_size
         self.num_layers = num_layers
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True, bidirectional=True)
