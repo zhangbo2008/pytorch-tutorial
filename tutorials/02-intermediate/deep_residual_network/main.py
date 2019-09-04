@@ -58,7 +58,7 @@ class ResidualBlock(nn.Module):
         self.relu = nn.ReLU(inplace=True)
         self.conv2 = conv3x3(out_channels, out_channels)
         self.bn2 = nn.BatchNorm2d(out_channels)
-        self.downsample = downsample
+        self.downsample = downsample #下采样
         
     def forward(self, x):
         residual = x
@@ -146,6 +146,10 @@ for epoch in range(num_epochs):
                    .format(epoch+1, num_epochs, i+1, total_step, loss.item()))
 
     # Decay learning rate
+
+    '''
+    进行学习率衰减!所以cnn里面最终使用的是resnet,rnn 里面最终使用的是blstm
+    '''
     if (epoch+1) % 20 == 0:
         curr_lr /= 3
         update_lr(optimizer, curr_lr)
