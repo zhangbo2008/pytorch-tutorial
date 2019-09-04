@@ -13,6 +13,13 @@ print(tmp)  #tensor([1., 1., 1., 1., 1.])  结果返回这个.
 tmp=tmp.exp()
 print(tmp)
 
+prob = torch.ones(20)
+# 下面一行进行多项式分布抽样.打到随机的目的,抽取一个.
+print(torch.multinomial(prob, num_samples=1))
+input = torch.multinomial(prob, num_samples=1).unsqueeze(1)  #unsqueeze 给指定位置加上维数为一的维度
+
+
+print(input)
 
 '''
 
@@ -147,7 +154,9 @@ with torch.no_grad():
         '''
         prob = torch.ones(vocab_size)
         #下面一行进行多项式分布抽样.打到随机的目的,抽取一个.
-        input = torch.multinomial(prob, num_samples=1).unsqueeze(1).to(device)
+        input = torch.multinomial(prob, num_samples=1).unsqueeze(1).to(device) #所以squense的长度就是1.
+        #所以虽然是seq2seq的训练但是只是看一个长度.
+
 
         for i in range(num_samples):
             # Forward propagate RNN 

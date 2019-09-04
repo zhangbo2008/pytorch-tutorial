@@ -5,7 +5,9 @@ import torch.nn as nn
 from torchvision import transforms
 from torchvision.utils import save_image
 
-
+'''
+cv里面效果最好的就是gan网络了.感觉同理也可以用在lstm上.
+'''
 # Device configuration
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -22,7 +24,7 @@ if not os.path.exists(sample_dir):
     os.makedirs(sample_dir)
 
 # Image processing
-transform = transforms.Compose([
+transform = transforms.Compose([#系列transform用compose
                 transforms.ToTensor(),
                 transforms.Normalize(mean=(0.5, 0.5, 0.5),   # 3 for RGB channels
                                      std=(0.5, 0.5, 0.5))])
@@ -38,7 +40,7 @@ data_loader = torch.utils.data.DataLoader(dataset=mnist,
                                           batch_size=batch_size, 
                                           shuffle=True)
 
-# Discriminator
+# Discriminator  #区分器是一个神经翁罗
 D = nn.Sequential(
     nn.Linear(image_size, hidden_size),
     nn.LeakyReLU(0.2),
@@ -48,7 +50,7 @@ D = nn.Sequential(
     nn.Sigmoid())
 
 # Generator 
-G = nn.Sequential(
+G = nn.Sequential(#生成器一样也是神经网络
     nn.Linear(latent_size, hidden_size),
     nn.ReLU(),
     nn.Linear(hidden_size, hidden_size),
@@ -67,7 +69,7 @@ g_optimizer = torch.optim.Adam(G.parameters(), lr=0.0002)
 
 def denorm(x):
     out = (x + 1) / 2
-    return out.clamp(0, 1)
+    return out.clamp(0, 1) #clamp切割一个向量里面每一个数值到0,1之间.
 
 def reset_grad():
     d_optimizer.zero_grad()

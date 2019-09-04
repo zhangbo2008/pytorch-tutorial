@@ -46,7 +46,9 @@ class RNN(nn.Module):
         self.fc = nn.Linear(hidden_size, num_classes)
     
     def forward(self, x):
-        # Set initial hidden and cell states 
+        # Set initial hidden and cell states
+        #h0=  hidden_layers   batch   hidden_size
+        #input = batch , seq , dim
         h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(device) 
         c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(device)
         
